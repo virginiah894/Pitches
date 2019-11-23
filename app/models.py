@@ -1,15 +1,27 @@
 from .import db
+from . import login_manager
+# class to provide common user interface for all users 
+
+from flask_login import UserMixin
 # function that takes password and generate a password hardh annd the later function  checks to confirm if the passwords match
 from werkzeug.security import generate_password_hash,check_password_hash
 # class for defining tthe users in the database
-class User(db.Model):
+
+
+
+@login_manager
+def load_user(user_id):
+  return User.query.get(int(user_id))
+
+class User(UserMixin,db.Model):
   # table head
   __tablename__ = 'users'
   # table content
   
   id = db.Column(db.Integer,primary_key = True)
 # adds a username which takes a maximum of 200 characters
-  username = db.Column(db.String(200))
+  username = db.Column(db.String(200),index = True)
+  email =db.Column(db.String(200),unique = True,index = True)
   role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
   pass_secure =db.Column(db.String(200))
   @property
