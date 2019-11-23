@@ -1,9 +1,10 @@
+import os
 from app import create_pitch,db
 from app.models import User,Role
 from flask_script import Manager,Server
 from flask_migrate import Migrate,MigrateCommand
 
-app = create_pitch('production')
+app = create_pitch('development')
 
 manager = Manager(app)
 manager.add_command('server',Server)
