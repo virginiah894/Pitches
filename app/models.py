@@ -72,11 +72,11 @@ class Comment(db.Model):
   user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
 
-    def save_comments(self):
-      db.session.add(self)
-      db.session.commit()
-    @classmethod
-    def get_comments(cls,id):
-      comments= Comment.query.filter_by().all()
-      return comments
+def save_comments(self):
+  db.session.add(self)
+  db.session.commit()
+@classmethod
+def get_comments(cls,id):
+  comments= Comment.query.filter_by().all()
+  return comments
 

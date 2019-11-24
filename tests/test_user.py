@@ -1,5 +1,5 @@
 import unittest
-from app.models import User
+from app.models import User,Comment
 
 class UserModelTest(unittest.TestCase):
 # instantiating the user from the class User
