@@ -6,7 +6,7 @@ from flask_login import UserMixin
 # function that takes password and generate a password hardh annd the later function  checks to confirm if the passwords match
 from werkzeug.security import generate_password_hash,check_password_hash
 # class for defining tthe users in the database
-
+from datetime import datetime
 
 
 @login_manager.user_loader
@@ -52,8 +52,30 @@ class Role(db.Model):
   __tablename__ = 'roles'
   id = db.Column(db.Integer,primary_key = True)
   name = db.Column(db.String(200))
+  # relationships between users and User/role ,Comment classes
   users = db.relationship('User',backref = 'role',lazy="dynamic")
+  comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
+
+
+
 def __repr__(self):
   return f'User{self.name}'
   
+class Comment(db.Model):
+  __tablename__ = "Comments"
+  id = db.Column(db.Integer,primary_key = True)
+  movie_id = db.Column(db.Integer)
+  movie_title = db.Column(db.String)
+  image_path = db.Column(db.String)
+  movie_review = db.Column(db.String)
+  posted = db.Column(db.DateTime,default=datetime.utcnow)
+  user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+
+    def save_comments(self):
+      db.session.add(self)
+      db.session.commit()
+    @classmethod
+    def get_comments(cls,id):
+        Comment.all_comments.clear()
 
