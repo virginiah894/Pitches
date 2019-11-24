@@ -30,7 +30,7 @@ def update_profile(usname):
     
 @main.route('/user/<usname>/update/pic',methods= ['POST'])
 @login_required
-def update_pic(uname):
+def update_pic(usname):
     user = User.query.filter_by(username = usname).first()
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
