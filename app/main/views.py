@@ -1,6 +1,6 @@
-from flask_login import login_required
+from flask_login import login_required,current_user
 from flask import render_template,request,redirect,url_for,abort
-from ..models import User
+from ..models import User,Comment
 from ..import db,photos
 from .forms import UpdateProfile
 @main.route('/')
@@ -38,3 +38,20 @@ def update_pic(usname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',usname=usname))
+@main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
+@login_required
+def new_comment(id):
+    form = CommentForm()
+    pitch = Pitches.query.filter_by(id =pitch_id).first()
+    if form.validate_on_submit():
+        title = form.title.data
+        comment = form.comment.data
+
+        # new comment instance
+        new_comment = Comment(pitch =pitch_id,pitch_comment=comment,user=current_user)
+        # save comment
+        new_comment.save_comment()
+        return redirect(url_for('.comment',id = pitch_id ))
+
+    
+    return render_template('newcomment.html',form=form,user=user,pitch = pitch)
