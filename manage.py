@@ -1,6 +1,6 @@
 import os
 from app import create_pitch,db
-from app.models import User,Role
+from app.models import User,Role,Comment
 from flask_script import Manager,Server
 from flask_migrate import Migrate,MigrateCommand
 
