@@ -5,9 +5,11 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_uploads import UploadSet,configure_uploads,IMAGES
 from flask_mail import Mail
+# from flask_simplemde import SimpleMDE
 app = Flask(__name__)
 bootstrap = Bootstrap()
 db = SQLAlchemy(app)
+simple = SimpleMDE
 # defining what files are uploaded
 photos = UploadSet('photos',IMAGES)
 mail= Mail()
@@ -33,5 +35,9 @@ def create_pitch(config_name):
 # settings for uploads
     configure_uploads(app,photos)
     mail.init_app(app)
+    simple.init_app(app)
+
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
     return app
 
