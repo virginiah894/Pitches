@@ -1,0 +1,3 @@
+Hello {{user.username}}
+Welcome to Pitches.com
+We have just seen you have signed up to our application.Enjoy the several pitches and feel free to comment,add your pitch  ,upvote or downvote pitches.

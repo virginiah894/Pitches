@@ -1,11 +1,4 @@
 {% extends 'base.html'%}
-{% import 'bootstrap/wtf.html' as wtf%}
-
-{% block content %}
-<div class="container">
-  {{wtf.quick_form(form)}}
-</div>
-{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -20,6 +13,17 @@
     {%else%}
       <p> {{user.username| capitalize}} has no bio </p>
     {% endif %}
+
+    {% if user == current_user %}
+    <!-- <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
+{% endif %} -->
+<form  action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype = "multipart/form-data">
+
+  <input type="file"  name="photo" class="form-control" required>
+  <input type="submit">
+ </form>
+ {% endif %}
+
   </div>
 
   <!--Display profile photo-->
@@ -27,23 +31,13 @@
 
     {% if user.profile_pic_path %}
     <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
-    
     {%else%}
     <p>No profile picture</p>
-
     {% endif %}
-  
   </div>
 </div>
-{% if user == current_user %}
-<form  action="{{url_for('main.update_pic',usname=user.username)}}" method="post" enctype = "multipart/form-data">
-
-  <input type="file"  name="photo" class="form-control" required>
-  <input type="submit">
-</form>
-
-<!-- enctype = "multipart/form-data"-an attribute on the form to enable users upload a file -->
-
-{% endif %}
 </div>
+
 {% endblock %}
+
+
