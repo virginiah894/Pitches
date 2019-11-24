@@ -23,6 +23,15 @@ class User(UserMixin,db.Model):
   username = db.Column(db.String(200),index = True)
   email =db.Column(db.String(200),unique = True,index = True)
   role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+  # add columns for the bio and the  profile photo
+  bio = db.Column(db.String(200))
+  profile_pic_path = db.Column(db.String())
+  password_secure = db.Column(db.String(200))
+  
+  
+  
+  
+  
   pass_secure =db.Column(db.String(200))
   @property
     # decorater with a  class which cannot be read
