@@ -1,13 +1,16 @@
 from flask_login import login_required,current_user
-from flask import render_template,request,redirect,url_for,abort
+from flask import render_template ,request,redirect,url_for,abort
 from ..models import User,Comment
 from ..import db,photos
 from .forms import UpdateProfile
+from .import main
 # import markdown2
+
+
+
+
 @main.route('/')
 def index():
-
-
     return render_template('index.html')
 
 @main.route('/user/<usname>/update',methods = ['GET','POST'])
@@ -39,7 +42,7 @@ def update_pic(usname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',usname=usname))
-@main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
+@main.route('/pitch/new/<int:id>', methods = ['GET','POST'])
 @login_required
 def new_comment(id):
     form = CommentForm()
@@ -56,8 +59,7 @@ def new_comment(id):
 
     
     return render_template('newcomment.html',form=form,user=user,pitch = pitch)
-import markdown2  
-.....
+
 @main.route('/comment/<int:id>')
 def single_comment(id):
     comment = Comment.query.get(id)
@@ -65,3 +67,8 @@ def single_comment(id):
         abort(404)
     format_comment = markdown2.markdown(comment.pitch_comment,extras=["code-friendly", "fenced-code-blocks"])
     return render_template('comment.html',comment = comment,format_comment=format_comment)
+@main.route('/everything')
+def everything():
+    # comment = Comment.query.all()
+    everything = Pitch.query.all()
+    return render_template('everything.html',everything = everything,comment=comment)

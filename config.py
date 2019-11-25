@@ -1,6 +1,7 @@
 import os
 class  Config:
   SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Perry@localhost/pitches'
+  SECRET_KEY = '12345679'
   UPLOADED_PHOTOS_DEST ='app/static/photos'
 
   MAIL_SERVER = 'smtp.googlemail.com'
