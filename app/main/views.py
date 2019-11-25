@@ -1,17 +1,20 @@
 from flask_login import login_required,current_user
 from flask import render_template ,request,redirect,url_for,abort
-from ..models import User,Comment
+from ..models import User,Comment,Pitch
 from ..import db,photos
 from .forms import UpdateProfile
-from .import main
+from . import main
 # import markdown2
-
-
-
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    title = "Welcome to Pitches World"
+    promotion = Pitch.query.filter_by(category ='promotion')
+    interview = Pitch.query.filter_by(category ='interview')
+    Pickupline = Pitch.query.filter_by(category ='pickupline')
+    pitch = Pitch.query.filter_by().first()
+    return render_template('index.html',title = title,promotion = promotion,pickupline = Pickupline)
+
 
 @main.route('/user/<usname>/update',methods = ['GET','POST'])
 @login_required

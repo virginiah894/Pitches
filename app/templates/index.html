@@ -1,14 +1,10 @@
 {% extends 'base.html'%}
-
+{% import 'macros.html' as macro %} 
 {% block styles%}
     {{ super() }}
     <link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
 {% endblock %}
-
-{% block content %}
-<div class="home text-center ">
-  <h1> PITCHES.COM</h1>
-
-  
-</div>
-{% endblock %}
+{%block content %}
+<body>
+<h1>url_for{{'main.title'}}</h1>
+{% end bock%}
