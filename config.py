@@ -3,6 +3,7 @@ class  Config:
   SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Perry@localhost/pitches'
   SECRET_KEY = '12345679'
   UPLOADED_PHOTOS_DEST ='app/static/photos'
+  SQLALCHEMY_TRACK_MODIFICATIONS = True
 
   MAIL_SERVER = 'smtp.googlemail.com'
   MAIL_PORT = 587
@@ -20,6 +21,7 @@ class prodConfig(Config):
   pass
 class DevConfig(Config):
   SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Perry@localhost/pitches'
+  
 
   DEBUG = True
 
