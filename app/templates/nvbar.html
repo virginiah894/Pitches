@@ -13,22 +13,19 @@
                     categories
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/example/1">Promotion</a>
+                    <a class="dropdown-item" href="/example/1">Pickup</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/category/2">Interview Pitches</a>
+                    <a class="dropdown-item" href="/category/2">Promotion Pitches</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/category/3">Personal Pitches</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/category/4">PickUplines Pitches</a>
-
-                  </div>
+                    <a class="dropdown-item" href="/category/3">Product Pitches</a>
+      
               </a>
       </div>
 
 
       <div class="navbar-nav ml-auto">
               {% if current_user.is_authenticated %}
-              <a class="nav-item nav-link" href="{{url_for('main.profile',uname=current_user.username)}}" title="profile"><i class="fas fa-user"></i> {{current_user.username}}</a>
+              <a class="nav-item nav-link" href="{{url_for('main.update_profile',usname=current_user.username)}}" title="profile"><i class="fas fa-user"></i> {{current_user.username}}</a>
               <a class="nav-item nav-link" href="{{url_for('auth.logout')}}">Sign out <i class="fas fa-sign-out-alt"></i> </a>
               {% else %}
               <a class="nav-item nav-link" href="{{url_for('auth.login')}}">Sign in</a>

@@ -30,9 +30,9 @@ def update_profile(usname):
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('.profile',usname=user.username))
+        return redirect(url_for('.profile.html',usname=user.username))
 
-    return render_template('profile/update.html',form =form)
+    return render_template('/profile/update.html',form =form)
     
 @main.route('/user/<usname>/update/pic',methods= ['POST'])
 @login_required
@@ -43,7 +43,7 @@ def update_pic(usname):
         path = f'photos/{filename}'
         user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile',usname=usname))
+    return redirect(url_for('profile/update.html',usname=usname))
 @main.route('/pitch/new/<int:id>', methods = ['GET','POST'])
 @login_required
 def new_comment(id):
@@ -93,7 +93,7 @@ def pitch_example(id):
     pitches = Pitch.get_pitches(examples.id)
 
     
-    return render_template('examples.html', title=title, types=types, pitches=pitches)
+    return render_template('examples.html', title=title,pitches=pitches)
 @main.route('/category/pitch/new/<int:id>', methods=["GET", "POST"])
 def create_pitch(id):
     '''
