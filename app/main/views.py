@@ -9,9 +9,10 @@ from . import main
 @main.route('/')
 def index():
     title = 'Welcome to Pitches World'
+    categories = Example.get_types()
     
-    examples = Example.get_types()
-    return render_template('index.html',title = title,examples = examples)
+    # examples = Example.get_types()
+    return render_template('index.html',title = title, categories=categories )
 
 
 @main.route('/user/<usname>/update',methods = ['GET','POST'])
@@ -89,7 +90,7 @@ def pitch_example(id):
 
     examples= Example.query.get(id)
     title = f'{examples.name} pitches'
-    pitches = Pitch.get_pitches(types.id)
+    pitches = Pitch.get_pitches(examples.id)
 
     
     return render_template('examples.html', title=title, types=types, pitches=pitches)

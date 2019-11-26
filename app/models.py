@@ -1,5 +1,5 @@
-from .import db
-from . import login_manager
+from .import db,login_manager
+
 # class to provide common user interface for all users
 
 from flask_login import UserMixin
@@ -23,15 +23,14 @@ class User(UserMixin, db.Model):
 # adds a username which takes a maximum of 200 characters
     username = db.Column(db.String(200), index=True,nullable= False)
     email = db.Column(db.String(200), unique=True, index=True)
-    users_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     # add columns for the bio and the  profile photo
     bio = db.Column(db.String(200))
-    profile_pic_path = db.Column(db.String())
+    profile_pic_path = db.Column(db.String(255))
     password_secure = db.Column(db.String(200),nullable = False)
-    comments = db.relationship('Comment', backref='users', lazy='dynamic')
-    pitches = db.relationship('Pitch', backref='users', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
+    pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
 
-    pass_secure = db.Column(db.String(200))
+    
 
     @property
     # decorater with a  class which cannot be read
@@ -40,69 +39,59 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
-        self.pass_secure = generate_password_hash(password)
+        self.password_secure = generate_password_hash(password)
         # method to confirm password entered and compare if they are similar
 
     def verify_password(self, password):
-        return check_password_hash(self.pass_secure, password)
+        return check_password_hash(self.password_secure, password)
 
     def __repr__(self):
           # function that returns  a printed representattion of the table object
         return f'User{self.username}'
 
-# class that defines the roles of the users in the database
-
-
-# class Role(db.Model):
-#     __tablename__ = 'roles'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(200))
-    # relationships between users and User/role ,Comment classes
-
-    # comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
-
-
-def __repr__(self):
-    return f'User{self.name}'
+        # class that defines the roles of the users in the database
+    def __repr__(self):
+        return f'User{self.name}'
 
 
 class Comment(db.Model):
-  __tablename__ = 'comments'
-  id = db.Column(db.Integer, primary_key=True)
-#   pitch_id = db.Column(db.Integer)
-  pitch_title = db.Column(db.String)
-  posted = db.Column(db.DateTime, default=datetime.utcnow)
-  users_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-  pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
-  # pitches = db.relationship('Pitch', backref='comments', lazy='dynamic')
+
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(255))
+    posted = db.Column(db.DateTime, default=datetime.utcnow)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+  
 
 
-def save_comments(self):
-    db.session.add(self)
-    db.session.commit()
+    def save_comments(self):
+        db.session.add(self)
+        db.session.commit()
 
 
-@classmethod
-def get_comments(cls, id):
-    comments = Comment.query.filter_by().all()
-    return comments
+    @classmethod
+    def get_comments(cls, id):
+        comments = Comment.query.filter_by().all()
+        return comments
 
 
 class Pitch(db.Model):
+
     __tablename__ = 'pitches'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     
-    category = db.Column(db.String(100))
+    
     author = db.Column(db.String(100))
     content = db.Column(db.String)
     upvote = db.Column(db.Integer)
     downvote = db.Column(db.Integer)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = db.relationship('Comment', backref='pitches', lazy='dynamic')
+    comment = db.relationship('Comment', backref='pitch', lazy='dynamic')
+    example_id = db.Column(db.Integer,db.ForeignKey('examples.id'))
 
     def save_pitch(self):
         db.session.add(self)
@@ -112,15 +101,15 @@ class Pitch(db.Model):
     def get_pitches(cls, id):
         pitches = Pitch.query.filter_by().all()
         return pitches
+        
 class Example(db.Model):
     
     __tablename__= 'examples'
-    
+
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(255), index = True)
-
-    pitches = db.relationship('Pitch', backref = 'examples', lazy = "dynamic")
-
+    pitches = db.relationship('Pitch', backref = 'examples', lazy = "dynamic")  
+    
     @classmethod
     def get_types(cls):
         examples = Example.query.all()

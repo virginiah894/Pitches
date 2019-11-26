@@ -14,4 +14,17 @@ class CommentForm(FlaskForm):
 class UpdatePitch(FlaskForm):
     title = StringField(' Title', validators = [Required()])
     pitch = TextAreaField('Add a pitch', validators = [Required()])
+    author = TextAreaField('Add an author',validators= [Required])
+    category =TextAreaField('Add a category',validators= [Required])
     submit = SubmitField('Submit')
+
+
+
+# category = db.Column(db.String(100))
+    # author = db.Column(db.String(100))
+    # content = db.Column(db.String)
+    # upvote = db.Column(db.Integer)
+    # downvote = db.Column(db.Integer)
+    # date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    # users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # comment 
