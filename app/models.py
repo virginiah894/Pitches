@@ -21,15 +21,15 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 # adds a username which takes a maximum of 200 characters
-    username = db.Column(db.String(200), index=True)
+    username = db.Column(db.String(200), index=True,nullable= False)
     email = db.Column(db.String(200), unique=True, index=True)
-    # role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+    users_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     # add columns for the bio and the  profile photo
     bio = db.Column(db.String(200))
     profile_pic_path = db.Column(db.String())
-    password_secure = db.Column(db.String(200))
-    comments = db.relationship('Comment', backref='username', lazy='dynamic')
-    pitches = db.relationship('Pitch', backref='username', lazy='dynamic')
+    password_secure = db.Column(db.String(200),nullable = False)
+    comments = db.relationship('Comment', backref='users', lazy='dynamic')
+    pitches = db.relationship('Pitch', backref='users', lazy='dynamic')
 
     pass_secure = db.Column(db.String(200))
 
@@ -69,12 +69,12 @@ def __repr__(self):
 class Comment(db.Model):
   __tablename__ = 'comments'
   id = db.Column(db.Integer, primary_key=True)
-  pitch_id = db.Column(db.Integer)
+#   pitch_id = db.Column(db.Integer)
   pitch_title = db.Column(db.String)
   posted = db.Column(db.DateTime, default=datetime.utcnow)
-  user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-  users = db.relationship('User', backref='pitch_id', lazy="dynamic")
-  pitches = db.relationship('Pitch', backref='comments', lazy='dynamic')
+  users_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+  # pitches = db.relationship('Pitch', backref='comments', lazy='dynamic')
 
 
 def save_comments(self):
@@ -99,9 +99,10 @@ class Pitch(db.Model):
     content = db.Column(db.String)
     upvote = db.Column(db.Integer)
     downvote = db.Column(db.Integer)
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = db.relationship('Comment', backref='title', lazy='dynamic')
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comments = db.relationship('Comment', backref='pitches', lazy='dynamic')
 
     def save_pitch(self):
         db.session.add(self)
@@ -111,3 +112,16 @@ class Pitch(db.Model):
     def get_pitches(cls, id):
         pitches = Pitch.query.filter_by().all()
         return pitches
+class Example(db.Model):
+    
+    __tablename__= 'examples'
+    
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(255), index = True)
+
+    pitches = db.relationship('Pitch', backref = 'examples', lazy = "dynamic")
+
+    @classmethod
+    def get_types(cls):
+        examples = Example.query.all()
+        return examples

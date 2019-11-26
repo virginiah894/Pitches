@@ -1,19 +1,17 @@
 from flask_login import login_required,current_user
 from flask import render_template ,request,redirect,url_for,abort
-from ..models import User,Comment,Pitch
+from ..models import User,Comment,Pitch,Example
 from ..import db,photos
-from .forms import UpdateProfile
+from .forms import UpdateProfile,UpdatePitch,CommentForm
 from . import main
 # import markdown2
 
 @main.route('/')
 def index():
-    title = "Welcome to Pitches World"
-    promotion = Pitch.query.filter_by(category ='promotion')
-    interview = Pitch.query.filter_by(category ='interview')
-    Pickupline = Pitch.query.filter_by(category ='pickupline')
-    pitch = Pitch.query.filter_by().first()
-    return render_template('index.html',title = title,promotion = promotion,pickupline = Pickupline)
+    title = 'Welcome to Pitches World'
+    
+    examples = Example.get_types()
+    return render_template('index.html',title = title,examples = examples)
 
 
 @main.route('/user/<usname>/update',methods = ['GET','POST'])
@@ -70,8 +68,46 @@ def single_comment(id):
         abort(404)
     format_comment = markdown2.markdown(comment.pitch_comment,extras=["code-friendly", "fenced-code-blocks"])
     return render_template('comment.html',comment = comment,format_comment=format_comment)
-@main.route('/everything')
-def everything():
-    # comment = Comment.query.all()
-    everything = Pitch.query.all()
-    return render_template('everything.html',everything = everything,comment=comment)
+# @main.route('/everything')
+# def everything():
+#     # comment = Comment.query.all()
+#     everything = Pitch.query.all()
+#     return render_template('everything.html',everything = everything,comment=comment)
+@main.route('/user/pitches/<int:id>')
+def everything(id):
+    
+    users = User.query.get(id)
+    title = f'{users.username} pitches'
+    pitches = Pitch.get_pitches_user(users.id)
+    
+    return render_template('everything.html',title=title,pitches=pitches)
+@main.route('/example/<int:id>')
+def pitch_example(id):
+    '''
+    A view function that will return the pitches on a specific example of pitch
+    '''
+
+    examples= Example.query.get(id)
+    title = f'{examples.name} pitches'
+    pitches = Pitch.get_pitches(types.id)
+
+    
+    return render_template('examples.html', title=title, types=types, pitches=pitches)
+@main.route('/category/pitch/new/<int:id>', methods=["GET", "POST"])
+def create_pitch(id):
+    '''
+    using a form to create a new pitch function
+    '''
+
+    form =UpdatePitch
+    examples = Example.query.filter_by(id=id).first()
+    if form.validate_on_submit():
+        pitch = form.pitch.data
+        title = form.title.data
+
+        new_pitch = Pitch(examples_id=examples.id, title=title, pitch=pitch, user=current_user)
+        new_pitch.save_pitch()
+        return redirect(url_for('.pitch_example', id=types.id))
+
+    title = f'{examples.name} pitches'
+    return render_template('new_pitch.html', title=title, UpdatePitch_form=form,examples=examples)
