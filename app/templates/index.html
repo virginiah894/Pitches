@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+
 {% block content %}
+
 <div class="container">
-<h1 style="color: blue">WELCOME TO PITCHES.COM</h1>
-<div class="row">
-{% for category in categories %}
-<div class="col-sm-12-col-md-6-col-lg-4 m-1">
-  <div class="card" style="width: 18rem;">
-    <p>{{category.name}}</p>
+  <div class="row">
+    {{macro.displayExample(categories)}}
   </div>
 </div>
-{%  endfor %}
-</div>
-</div>
- {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% block content%}
+
+<div class="card border-primary mb-3" style="width: 100%;">
+    <div class="card-header">Add Comment</div>
+    {% if comment %}
+    <div class="card-body text-primary">
+      {{macro.displayComment(comment)}}
+         </div>
+         {% else %}
+         <p>No comments to display</p>
+         {% endif %}
+  </div>
+  {% endblock %}

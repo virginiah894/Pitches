@@ -99,7 +99,7 @@ class Pitch(db.Model):
 
     @classmethod
     def get_pitches(cls, id):
-        pitches = Pitch.query.filter_by().all()
+        pitches = Pitch.query.filter_by(example_id=id).all()
         return pitches
         
 class Example(db.Model):

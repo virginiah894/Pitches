@@ -4,14 +4,18 @@
 {% block content%}
 <h2 class="text-center">{{pitches.name}}</h2>
 <div class="container">
+  <a href="/example/pitch/new/{{example.id}}" class="btn bnt-sm btn-outline-primary"> Add Pitch
+  </a>
   <div class="row">
-      {% if pitches %}
+    {% if pitches %}
 
-      {{macro.displayAll(pitches)}}
-      {% else %}
-        <h4 class="text-center"> No pitches yet</h4>
-        
-       {% endif %}
+    {{macro.displayAll(pitches)}}
+    
+
+    {% else %}
+    <h4 class="text-center"> No pitches yet</h4>
+
+    {% endif %}
   </div>
-  </div> 
-  {% endblock %}
+</div>
+{% endblock %}

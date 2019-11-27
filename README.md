@@ -1,10 +1,17 @@
-ONE MINUTE PITCH
-This is a website allows a user to login after registtration and is able ti give their pitch and post and people can comment on it.
+##  PITCHES
+This is a website allows a user to sign up, create pitches and view other pitches posted.The user is also able to comment and view comments on different pitches.
 
 ## Author
 Virginiah Periah Kengara
 
 ## Behaviour Driven Development(BDD)
+* when you are on the landing page,navigate to the sign in route,this will allow you to sign up if you are not a user , once you sign up you are redirected to login based on your credentials.
+* You then update your profile and now you can interact with the website. 
+* On the landing page you can view pitches other people have posted based on the categories.
+* When you navigate to the drop-down list  of categories,you can see what others have posted and also able to add your own pitch.
+* You can also see several comments that have been made on the pitches and be able to add your comments
+* Once you sign up,you will get an email to welcome you to the website
+* while on your profile,you can see your pitches and comments that you have .
 
 ## Setup and Installation
 To view the application go to click here

@@ -1,8 +1,18 @@
 {% macro displayExample(pitches_list) %}
 
-    {% for example in pitches_list %}
-        <li>{{ example.title}}</li>
-    {% endfor %}
+{% for example in pitches_list %}
+<div class="col-sm-12 col-md-6 col-lg-3 mr-2">
+    <div class="card " style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{example.name}}</h5>
+            <p class="card-text">Are you an angel ? Cause you have been running through my mind........</p>
+            <a href="/example/{{example.id}}" class="btn btn-primary">View Pitches</a>
+        </div>
+    </div>
+</div>
+        
+
+{% endfor %}
 
 {% endmacro %}
 {% macro allPitches(pitch_list) %}
@@ -19,13 +29,14 @@
     </div>
 </div>
 
+
 {% endfor %}
 {% endmacro %}
 {%macro displayAll(pitches)%}
 {% for pitch in pitches%}
 <div class="col-sm-12" style="padding-bottom: 25px;">
     <div class="card m-auto">
-        <div class="card-header bg-info">
+        <div class="card-header bg-light">
             <div class="row">
                 <div class="col-sm-3">
                     <img src="" class="img-circle" alt="">
@@ -33,8 +44,34 @@
                 <div class="col-sm-6">
                     <h5 class="text-center">{{pitch.title}}</h5>
                 </div>
- 
-{%endfor %}
-{% endmacro %}
-                    
-                    
+                <div class="card-footer">
+
+                        <a href="/comment/{{pitch.id}}" class="btn btn-sm  btn-primary"> view comments</a>
+        
+                        <a href="/pitch/new/{{pitch.id}}" class="btn  btn-sm  btn-primary">Add Comment</a>
+                    </div>
+        
+
+
+                {%endfor %}
+                {% endmacro %}
+
+                {% macro displayComment(comment_list) %}
+                <div class="row">
+                {% for comment in comment_list %}
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>{{comment.comment}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <footer class="blockquote-footer">{{comment.user.username}} commented on your pitch</footer>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+                {% endmacro %}
+                
