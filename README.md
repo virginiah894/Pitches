@@ -40,5 +40,5 @@ Incase of any queries,concerns and clarifications email me on
 ## Bugs
 The website could load slowly when on slow internet
 
-License
-You can check out the license click here This project is licensed under the terms of MIT
+## License
+ MITLICENSE
