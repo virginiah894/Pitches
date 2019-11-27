@@ -41,4 +41,4 @@ Incase of any queries,concerns and clarifications email me on
 The website could load slowly when on slow internet
 
 ## License
- MIT(LICENSE)
+ [MIT] (LICENSE)
